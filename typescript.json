@@ -1,0 +1,123 @@
+{
+	"Big LOG": {
+		"prefix": "bl",
+		"body": [
+			"console.log(`\n\n\n\n\t\t\t$1\n\n\n`);"
+		],
+		"description": "Andrew Log"
+	},
+	"Util File": {
+		"prefix": "util",
+    "description": "Quick util file template",
+		"body": [
+			"/**",
+			" * @desc $1",
+			" * @returns $2",
+			" * @example $3",
+			" */",
+			"const ${TM_FILENAME_BASE} = (",
+			"  /**",
+			"   * $4",
+			"   */",
+			"  $5, ",
+			"  /**",
+			"   * $6",
+			"   */",
+			"  $7",
+			"  ) => {",
+			"    $8",
+			"};",
+			"",
+			"export default ${TM_FILENAME_BASE};",
+			""
+		]
+	},
+	"Util Test": {
+		"prefix": "utest",
+		"body": [
+			"import ${TM_FILENAME_BASE/^(.*).test/${1}/} from '../${TM_FILENAME_BASE/^(.*).test/${1}/}';",
+			"",
+			"test('${TM_FILENAME_BASE/^(.*).test/${1}/} || $1', () => {",
+			"  $2",
+			"});",
+			""
+		]
+	},
+	"Redux Slice": {
+		"prefix": "rslice",
+		"body": [
+			"import { createAsyncThunk, createSlice } from 'typescriptRedux';",
+			"",
+			"import { ${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}Data, ${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}State } from './${TM_FILENAME_BASE/(.*)\\.slice/${1}/}.types';",
+			"",
+			"export const initialState: ${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}State = {",
+			"  data: {",
+			"",
+			"  },",
+			"  fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}: {",
+			"    status: 'idle',",
+			"    error: null,",
+			"  },",
+			"};",
+			"",
+			"export const fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/} = createAsyncThunk(",
+			"  '${TM_FILENAME_BASE/(.*)\\.slice/${1}/}/fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}',",
+			"  async ({ tenantId }: { tenantId: string; }) => {",
+			"    return await fetchServices(`${process.env.MY_API}/url`, {",
+			"      method: 'POST',",
+			"      headers: {",
+			"        'content-type': 'application/json',",
+			"      },",
+			"      body: JSON.stringify({",
+			"      }),",
+			"    }) as Promise<${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}>;",
+			"  },",
+			");",
+			"",
+			"const ${TM_FILENAME_BASE/(.*)\\.slice/${1}/}Slice = createSlice({",
+			"  name: '${TM_FILENAME_BASE/(.*)\\.slice/${1}/}',",
+			"  initialState,",
+			"  reducers: {},",
+			"  extraReducers: (builder) => {",
+			"    builder",
+			"      .addCase(fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}.pending, (state) => {",
+			"        state.fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}.status = 'pending';",
+			"      })",
+			"      .addCase(fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}.fulfilled, (state, { payload }) => {",
+			"        state.fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}.status = 'fulfilled';",
+			"        state.data = payload;",
+			"      })",
+			"      .addCase(fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}.rejected, (state) => {",
+			"        state.fetch${TM_FILENAME_BASE/(.*)\\.slice/${1:/pascalcase}/}.status = 'rejected';",
+			"      })",
+			"  },",
+			"});",
+			"",
+			"export default ${TM_FILENAME_BASE/(.*)\\.slice/${1}/}Slice.reducer;",
+			"",
+		],
+		"description": "Slice SNippet"
+	},
+	"style boilerplate": {
+		"prefix": "style",
+		"body": [
+			"import { Theme } from '@mui/material';",
+			"",
+			"export const styles = {",
+			"  $1",
+			"};",
+			"",
+			"export default styles;"
+		]
+	},
+	"selectors boilerplate": {
+		"prefix": "select",
+		"body": [
+			"import { RootState } from 'typescriptRedux';",
+			"",
+			"export const get$1 = (state: RootState) => {",
+			"  return state.$2;",
+			"};"
+		]
+	}
+}
